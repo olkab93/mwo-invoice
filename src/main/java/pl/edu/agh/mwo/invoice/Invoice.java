@@ -57,10 +57,12 @@ public class Invoice {
 		String printed = String.valueOf(number);
 		for (Product product : products.keySet()) {
 			printed += "\n";
-			printed += product.getName();
+			printed += " " + product.getName();
 			printed += " "  + products.get(product);
 			printed += " " + product.getPrice();
 		}
+		
+		//printed += products.keySet().stream().map(product -> )
 		
 		return printed;
 	}
