@@ -28,10 +28,24 @@ public class InvoiceTest {
 	}
 	
 	@Test
-	public void twoInvoicesHaveDifferentNumbers() {
+	public void testTwoInvoicesHaveDifferentNumbers() {
 	    int number1 = new Invoice().getNumber();
 	    int number2 = new Invoice().getNumber();
 		Assert.assertNotEquals(number1, number2);
+	}
+	
+	@Test
+	public void testTheSameInvoiceHasTheSameNumber(){
+		Assert.assertEquals(invoice.getNumber(), invoice.getNumber());
+	}
+	
+	@Test
+	public void testThatInvoicesNumbersAreRising() {
+		int numberFirst = invoice.getNumber();
+		int numberSecond = new Invoice().getNumber();
+		Assert.assertThat(numberFirst, Matchers.lessThan(numberSecond));
+
+		//Assert.assertThat(invoice.getNumber(), Matchers.lessThan(new Invoice().getNumber()));
 	}
 
 	@Test
