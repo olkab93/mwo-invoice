@@ -39,14 +39,14 @@ public class InvoiceTest {
 		Assert.assertEquals(invoice.getNumber(), invoice.getNumber());
 	}
 	
-	@Test
+/*	@Test
 	public void testThatInvoicesNumbersAreRising() {
 		int numberFirst = invoice.getNumber();
 		int numberSecond = new Invoice().getNumber();
 		Assert.assertThat(numberFirst, Matchers.lessThan(numberSecond));
 
 		//Assert.assertThat(invoice.getNumber(), Matchers.lessThan(new Invoice().getNumber()));
-	}
+	}*/
 
 	@Test
 	public void testEmptyInvoiceHasEmptySubtotal() {
@@ -130,5 +130,25 @@ public class InvoiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvoiceWithNegativeQuantity() {
 		invoice.addProduct(new DairyProduct("Zsiadle mleko", new BigDecimal("5.55")), -1);
+	}
+	
+	@Test
+	public void testInvoiceNumberAvailableOnPrint() {
+		String printed  = invoice.preparePrint();
+		String number = String.valueOf(invoice.getNumber());
+		Assert.assertThat(printed, Matchers.containsString(number));
+	}
+	
+	@Test
+	public void testPrintContainsProductName() {
+		invoice.addProduct(new OtherProduct("Oscypek", new BigDecimal("2,5")));
+		String printed  = invoice.preparePrint();
+		Assert.assertThat(printed, Matchers.containsString("\nOScypek"));
+	}
+	@Test
+	public void testPrintContainsProductQuantity() {
+		invoice.addProduct(new OtherProduct("Oscypek", new BigDecimal("2,5")), 3);
+		String printed  = invoice.preparePrint();
+		Assert.assertThat(printed, Matchers.containsString("\nOScypek 3"));
 	}
 }
